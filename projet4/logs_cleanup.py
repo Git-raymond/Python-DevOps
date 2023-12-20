@@ -1,27 +1,22 @@
-# logs_cleanup.py
-
 import os
-import time
+from datetime import datetime, timedelta
 
-def cleanup_logs(logs_directory, days_to_keep):
-    current_time = time.time()
+log_dir = '/var/log'
+retention_period = 10  # jours
 
-    for file in os.listdir(logs_directory):
-        file_path = os.path.join(logs_directory, file)
-        if os.path.isfile(file_path):
-            # Calculer la différence en jours entre le temps actuel et le temps de création du fichier
-            file_age = (current_time - os.path.getctime(file_path)) / (24 * 3600)
 
-            # Supprimer les fichiers plus anciens que la période spécifiée
-            if file_age > days_to_keep:
-                os.remove(file_path)
-                print(f"Removed old log file: {file_path}")
+def cleanup_logs(directory, retention):
+    now = datetime.now()
+    cutoff_date = now - timedelta(days=retention)
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        file_stat = os.stat(file_path)
+        file_mod_date = datetime.fromtimestamp(file_stat.st_mtime)
+        if os.path.isfile(file_path) and file_mod_date < cutoff_date:
+            print(f"Suppression : {file_path}")
+            os.remove(file_path)
 
-    print("Cleanup completed successfully.")
 
 if __name__ == "__main__":
-    logs_directory = "/var/log"  # Change this to your log directory
-    days_to_keep = 10
-
-    cleanup_logs(logs_directory, days_to_keep)
+    cleanup_logs(log_dir, retention_period)
 
