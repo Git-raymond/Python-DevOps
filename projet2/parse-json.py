@@ -24,7 +24,7 @@ def parse_json(file_path):
 
 if __name__ == "__main__":
     # Chemin du fichier JSON
-    json_file_path = "/home/formation/TP1/Python-DevOPs/projet2/liste_sites_web.json"
+    json_file_path = "/home/formation/TP1/Python-DevOPs/projet2/Files/exemple.json"
 
     # Appel de la fonction pour analyser le fichier JSON
     parse_json(json_file_path)
