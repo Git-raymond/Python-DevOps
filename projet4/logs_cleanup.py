@@ -17,8 +17,11 @@ def cleanup_logs(logs_directory, days_to_keep):
                 os.remove(file_path)
                 print(f"Removed old log file: {file_path}")
 
+    print("Cleanup completed successfully.")
+
 if __name__ == "__main__":
     logs_directory = "/var/log"  # Change this to your log directory
     days_to_keep = 10
 
     cleanup_logs(logs_directory, days_to_keep)
+
